@@ -1,0 +1,585 @@
+Taco Bell Taco
+210
+110
+12
+4
+30
+330
+18
+9
+Taco Bell Taco Supreme
+260
+140
+16
+6
+40
+350
+20
+10
+Taco Bell Soft Taco - Beef
+210
+90
+10
+4
+30
+570
+20
+11
+Taco Bell Soft Taco - Chicken
+190
+60
+7
+2.5
+35
+480
+19
+13
+Taco Bell Soft Taco - Steak
+280
+150
+17
+4
+35
+630
+20
+12
+Taco Bell Double Decker Taco
+380
+150
+17
+5
+30
+740
+43
+15
+Taco Bell Double Decker Taco Supreme
+420
+180
+21
+8
+40
+760
+45
+15
+Taco Bell Bean Burrito
+370
+110
+12
+3.5
+10
+1080
+54
+13
+Taco Bell 7-Layer Burrito
+520
+200
+22
+7
+25
+1270
+65
+16
+Taco Bell Chili Cheese Burrito
+330
+120
+13
+5
+25
+900
+40
+13
+Taco Bell Burrito Supreme - Beef
+430
+170
+18
+7
+40
+1210
+50
+17
+Taco Bell Burrito Supreme - Chicken
+410
+140
+16
+6
+45
+1120
+49
+20
+Taco Bell Burrito Supreme - Steak
+420
+140
+16
+6
+35
+1140
+48
+21
+Taco Bell Double Burrito Supreme - Beef
+510
+210
+23
+9
+60
+1500
+52
+23
+Taco Bell Double Burrito Supreme - Chicken
+460
+150
+17
+6
+70
+1200
+50
+27
+Taco Bell Double Burrito Supreme - Steak
+470
+160
+18
+7
+55
+1230
+48
+28
+Taco Bell Fiesta Burrito - Beef
+380
+130
+15
+5
+30
+1100
+49
+14
+Taco Bell Fiesta Burrito - Chicken
+370
+110
+12
+3.5
+35
+1000
+48
+17
+Taco Bell Fiesta Burrito - Steak
+370
+110
+12
+4
+25
+1020
+47
+18
+Taco Bell Grilled Stuft Burrito - Beef
+730
+320
+35
+11
+65
+2090
+75
+27
+Taco Bell Grilled Stuft Burrito - Chicken
+690
+270
+29
+8
+70
+1900
+73
+33
+Taco Bell Grilled Stuft Burrito - Steak
+690
+270
+30
+8
+60
+1970
+72
+30
+Taco Bell Chalupa Supreme - Beef
+380
+200
+23
+8
+40
+580
+29
+14
+Taco Bell Chalupa Supreme - Chicken
+360
+180
+20
+7
+45
+490
+28
+17
+Taco Bell Chalupa Supreme - Steak
+360
+180
+20
+7
+35
+500
+27
+17
+Taco Bell Chalupa Baja - Beef
+420
+240
+27
+7
+35
+760
+30
+14
+Taco Bell Chalupa Baja - Chicken
+400
+210
+24
+5
+40
+660
+28
+17
+Taco Bell Chalupa Baja - Steak
+400
+220
+24
+6
+30
+680
+27
+17
+Taco Bell Chalupa Nacho Cheese - Beef
+370
+200
+22
+6
+25
+740
+30
+13
+Taco Bell Chalupa Nacho Cheese - Chicken
+350
+170
+19
+4.5
+25
+640
+29
+16
+Taco Bell Chalupa Nacho Cheese - Steak
+350
+170
+19
+4.5
+20
+660
+28
+16
+Taco Bell Chalupa Santa Fe - Beef
+440
+260
+29
+7
+35
+660
+31
+14
+Taco Bell Chalupa Santa Fe - Chicken
+420
+240
+26
+6
+40
+560
+30
+17
+Taco Bell Chalupa Santa Fe - Steak
+430
+240
+27
+6
+35
+580
+29
+18
+Taco Bell Gordita Supreme - Beef
+300
+120
+14
+5
+35
+550
+27
+17
+Taco Bell Gordita Supreme - Chicken
+300
+120
+13
+5
+45
+530
+28
+16
+Taco Bell Gordita Supreme - Steak
+300
+120
+14
+5
+35
+550
+27
+17
+Taco Bell Gordita Baja - Beef
+360
+190
+21
+5
+35
+810
+29
+13
+Taco Bell Gordita Baja - Chicken
+340
+160
+18
+4
+40
+710
+28
+16
+Taco Bell Gordita Baja - Steak
+340
+160
+18
+4
+35
+760
+28
+15
+Taco Bell Gordita Nacho Cheese - Beef
+310
+140
+15
+4
+25
+780
+30
+13
+Taco Bell Gordita Nacho Cheese - Chicken
+290
+110
+13
+2.5
+25
+690
+29
+15
+Taco Bell Gordita Nacho Cheese - Steak
+290
+120
+13
+3
+20
+700
+28
+16
+Taco Bell Gordita Santa Fe - Beef
+380
+210
+23
+5
+35
+700
+31
+14
+Taco Bell Gordita Santa Fe - Chicken
+370
+180
+20
+4
+40
+610
+30
+17
+Taco Bell Gordita Santa Fe - Steak
+370
+180
+20
+4.5
+35
+620
+29
+17
+Taco Bell Cheesy Gordita Crunch
+560
+300
+33
+11
+60
+980
+44
+21
+Taco Bell Cheesy Gordita Crunch Supreme
+610
+340
+37
+13
+70
+990
+47
+22
+Taco Bell Nachos
+320
+160
+18
+4
+<5
+560
+34
+5
+Taco Bell Nachos Supreme
+440
+210
+24
+7
+35
+800
+44
+14
+Taco Bell Nachos BellGrande
+760
+350
+39
+11
+35
+1300
+83
+20
+Taco Bell Mucho Grande Nachos
+1320
+740
+82
+25
+75
+2670
+116
+31
+Taco Bell Pintos'n Cheese
+180
+80
+8
+4
+15
+640
+18
+9
+Taco Bell Mexican Rice
+190
+80
+9
+3.5
+15
+750
+23
+5
+Taco Bell Cinnamon Twists
+150
+40
+4.5
+1
+0
+190
+27
+1
+Taco Bell Tostada
+250
+110
+12
+4.5
+15
+640
+27
+10
+Taco Bell Mexican Pizza
+390
+220
+25
+8
+45
+930
+28
+18
+Taco Bell Enchirito - Beef
+370
+170
+19
+9
+50
+1300
+33
+18
+Taco Bell Enchirito - Chicken
+350
+140
+16
+8
+55
+1210
+32
+21
+Taco Bell Enchirito - Steak
+350
+150
+16
+8
+45
+1220
+31
+22
+Taco Bell MexiMelt
+290
+140
+15
+7
+45
+830
+22
+15
+Taco Bell Taco Salad with Salsa
+850
+470
+52
+14
+70
+2250
+69
+30
+Taco Bell Taco Salad with Salsa without Shell
+400
+200
+22
+10
+70
+1510
+31
+24
+Taco Bell Cheese Quesadilla
+350
+160
+18
+9
+50
+860
+31
+16
+Taco Bell Chicken Quesadilla
+400
+180
+19
+9
+75
+1050
+33
+25

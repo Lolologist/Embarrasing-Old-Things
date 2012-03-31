@@ -1,0 +1,65 @@
+Taco Bell 5-Layer Burrito
+Taco Bell Bean Burrito
+Taco Bell Burrito Supreme - Beef
+Taco Bell Burrito Supreme - Chicken
+Taco Bell Burrito Supreme - Steak
+Taco Bell Chalupa Baja - Beef
+Taco Bell Chalupa Baja - Chicken
+Taco Bell Chalupa Baja - Steak
+Taco Bell Chalupa Nacho Cheese - Beef
+Taco Bell Chalupa Nacho Cheese - Chicken
+Taco Bell Chalupa Nacho Cheese - Steak
+Taco Bell Chalupa Santa Fe - Beef
+Taco Bell Chalupa Santa Fe - Chicken
+Taco Bell Chalupa Santa Fe - Steak
+Taco Bell Chalupa Supreme - Beef
+Taco Bell Chalupa Supreme - Chicken
+Taco Bell Chalupa Supreme - Steak
+Taco Bell Cheese Quesadilla
+Taco Bell Cheesy Gordita Crunch
+Taco Bell Cheesy Gordita Crunch Supreme
+Taco Bell Chicken Quesadilla
+Taco Bell Chili Cheese Burrito
+Taco Bell Cinnamon Twists
+Taco Bell Double Burrito Supreme - Beef
+Taco Bell Double Burrito Supreme - Chicken
+Taco Bell Double Burrito Supreme - Steak
+Taco Bell Double Decker Taco
+Taco Bell Double Decker Taco Supreme
+Taco Bell Enchirito - Beef
+Taco Bell Enchirito - Chicken
+Taco Bell Enchirito - Steak
+Taco Bell Fiesta Burrito - Beef
+Taco Bell Fiesta Burrito - Chicken
+Taco Bell Fiesta Burrito - Steak
+Taco Bell Gordita Baja - Beef
+Taco Bell Gordita Baja - Chicken
+Taco Bell Gordita Baja - Steak
+Taco Bell Gordita Nacho Cheese - Beef
+Taco Bell Gordita Nacho Cheese - Chicken
+Taco Bell Gordita Nacho Cheese - Steak
+Taco Bell Gordita Santa Fe - Beef
+Taco Bell Gordita Santa Fe - Chicken
+Taco Bell Gordita Santa Fe - Steak
+Taco Bell Gordita Supreme - Beef
+Taco Bell Gordita Supreme - Chicken
+Taco Bell Gordita Supreme - Steak
+Taco Bell Grilled Stuft Burrito - Beef
+Taco Bell Grilled Stuft Burrito - Chicken
+Taco Bell Grilled Stuft Burrito - Steak
+Taco Bell MexiMelt
+Taco Bell Mexican Pizza
+Taco Bell Mexican Rice
+Taco Bell Mucho Grande Nachos
+Taco Bell Nachos
+Taco Bell Nachos BellGrande
+Taco Bell Nachos Supreme
+Taco Bell Pintos'n Cheese
+Taco Bell Soft Taco - Beef
+Taco Bell Soft Taco - Chicken
+Taco Bell Soft Taco - Steak
+Taco Bell Taco
+Taco Bell Taco Salad with Salsa
+Taco Bell Taco Salad with Salsa without Shell
+Taco Bell Taco Supreme
+Taco Bell Tostada

@@ -1,0 +1,161 @@
+
+#TACO BELL NAME GENERATOR v.0.1.0
+import random
+import linecache
+
+def prefixgenerator():
+    lines = 0
+    numofpressofar = 0
+    prefixline2 = ""
+    numofpres = random.randint(1,2)
+    f = open("tacobellprefixes.txt")
+    for line in f:
+        lines += 1
+    lineiwant = random.randint(1,lines)
+    prefixline = linecache.getline('tacobellprefixes.txt',lineiwant)
+    prefixline = prefixline[:-1]
+    numofpressofar = numofpressofar + 1
+    if numofpressofar < numofpres:
+        lineiwant = random.randint(1,lines)
+        prefixline2 = linecache.getline('tacobellprefixes.txt',lineiwant)
+        prefixline2 = prefixline2[:-1]
+    if prefixline2 != "":
+        if prefixline2 < prefixline:
+            returnthis = prefixline + prefixline2
+        else:
+            returnthis = prefixline2 + prefixline
+    else:
+        returnthis = prefixline
+    return returnthis
+def dumbnamegenerator():
+    lines = 0
+    numofsylabs = random.randint(2,4)
+    if numofsylabs == 2:
+        FILEPRE = open("tbprefixMW.txt")
+        FILEEND = open("tbsuffixMW.txt")
+        for line in FILEPRE:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        lines = 0
+        namesyl1 = linecache.getline('tbprefixMW.txt',lineiwant)
+        namesyl1 = namesyl1[:-2]
+        for line in FILEEND:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl2 = linecache.getline('tbsuffixMW.txt',lineiwant)
+        namesyl2 = namesyl2[:-2]
+        dumbname = namesyl1 +namesyl2
+    if numofsylabs == 3:
+        FILEPRE = open('tbprefixMW.txt')
+        FILEMID = open('tbsyl2MW.txt')
+        FILEEND = open('tbsuffixMW.txt')
+        for line in FILEPRE:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        lines = 0
+        namesyl1 = linecache.getline('tbprefixMW.txt',lineiwant)
+        namesyl1 = namesyl1[:-2]
+        for line in FILEMID:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl2 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl2 = namesyl2[:-2]
+        lines = 0
+        for line in FILEEND:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl3 = linecache.getline('tbsuffixMW.txt',lineiwant)
+        namesyl3 = namesyl3[:-2]
+        dumbname = namesyl1 +namesyl2 + namesyl3
+    if numofsylabs == 4:
+        FILEPRE = open('tbprefixMW.txt')
+        FILEMID = open('tbsyl2MW.txt')
+        FILEEND = open('tbsuffixMW.txt')
+        lines = 0
+        for line in FILEPRE:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        lines = 0
+        namesyl1 = linecache.getline('tbprefixMW.txt',lineiwant)
+        namesyl1 = namesyl1[:-2]
+        for line in FILEMID:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl2 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl2 = namesyl2[:-2]
+        lineiwant = random.randint(1,lines-1)
+        namesyl3 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl3 = namesyl3[:-2]
+        lines = 0
+        for line in FILEEND:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl4 = linecache.getline('tbsuffixMW.txt',lineiwant)
+        namesyl4 = namesyl4[:-2]
+
+        dumbname = namesyl1 +namesyl2 + namesyl3 + namesyl4
+    if numofsylabs == 5:
+        FILEPRE = open('tbprefixMW.txt')
+        FILEMID = open('tbsyl2MW.txt')
+        FILEEND = open('tbsuffixMW.txt')
+        for line in FILEPRE:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        lines = 0
+        namesyl1 = linecache.getline('tbprefixMW.txt',lineiwant)
+        namesyl1 = namesyl1[:-2]
+        for line in FILEMID:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl2 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl2 = namesyl2[:-2]
+        lines = 0
+        lineiwant = random.randint(1,lines-1)
+        namesyl3 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl3 = namesyl3[:-2]
+        lineiwant = random.randint(1,lines-1)
+        namesyl4 = linecache.getline('tbsyl2MW.txt',lineiwant)
+        namesyl4 = namesyl4[:-2]
+        for line in FILEEND:
+            lines += 1
+        lineiwant = random.randint(1,lines-1)
+        namesyl5 = linecache.getline('tbsuffixMW.txt',lineiwant)
+        namesyl5 = namesyl5[:-2]
+
+        dumbname = namesyl1 +namesyl2 + namesyl3 + namesyl4 + namesyl5
+    return dumbname
+
+def suffixgenerator():
+ lines = 0
+ numofpres = random.randint(1,2)
+ f = open("tacobellsuffixes.txt")
+ for line in f:
+     lines += 1
+ lineiwant = random.randint(1,lines-1)
+ suffix = linecache.getline('tacobellsuffixes.txt',lineiwant)
+ suffix = suffix[:-1]
+ a = random.randint(1,100)
+ if a < 75:
+     suffix = ""
+
+ return suffix
+
+def generator(prefix, dumbname, suffixes):
+    namegen = 'Taco Bell ' + str(prefix) + str(dumbname) + " " + str(suffixes)
+    return namegen
+
+def main():
+    a = prefixgenerator()
+    b = dumbnamegenerator()
+    c = suffixgenerator()
+    finalname = generator(a,b,c)
+    
+    screen_width = 180
+    text_width = len(finalname)
+    box_width = text_width + 6
+    left_margin = (screen_width - box_width) //2
+
+    print finalname
+
+if __name__ == '__main__':
+  main()

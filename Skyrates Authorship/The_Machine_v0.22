@@ -1,0 +1,498 @@
+from __future__ import division
+import re
+import sys
+from operator import itemgetter
+import codecs
+import os
+from math import fabs
+directoryhigher = "/Users/danielbishop/Python/The Machine/"
+directory = "/Users/danielbishop/Python/The Machine/Everyone2/"
+nametoopen = ""
+#some default values, to be changed at runtime if desired
+openname = 0
+shortnum = 40 ##number of tokens cutoff for short vs long utterances
+cutofftokens = 10000##number of tokens required for inclusion in the tests
+howmanytop = 10 ##number of top tokens in the zipfian top tokens
+def intro():
+    print "Welcome to The Machine, version 0.2."
+#    print "Here are your default values:"
+#    print "Iterating over 1 file,", 
+
+####
+####
+####
+# Hey, here's a thought: do a letter-by-letter analysis. Bigrams and trigrams not of words but of letter combos (and puntuation.) Wouldn't need to separate them.
+#I could catch, say, my own usage of two caps in a row that way.
+#Also, Fix smilies and inplement searching for them at beginning, end, and elsewhere, as well as how much and which ones.
+#Lastly, I think commas need to be dropped. Semicolons too, unfortunately. Keep them in for now, but maybe rewrite so as to be able to cut out certain ones if I want.
+#Investigate command-line commands to the program (sys.argv)?
+####
+####
+####
+
+
+
+    print "First thing's first: Do you want to use default values?"
+    print "Enter 1 to accept them, 2 not to."
+    
+    choice = raw_input()
+    if choice == "1":
+        choices = ["1","1"]
+        return choices
+    else:
+        print "Enter the directory to use, starting at this directory: (no / at the end)"
+        print directoryhigher
+        directory = str(directoryhigher) + str(raw_input()) + "/"
+        print "What do you want for the short sentence cutoff, in # of tokens? Default 40."
+        shortnum = int(raw_input())
+        print "What do you want for the cutoff token limit to do science upon? Default 5000."
+        cutofftoken = int(raw_input())
+    choices = []
+    print "OK. Do you want to iterate over everyone (1) or just one person (2)?"
+    choice = raw_input()
+    if choice == "1":
+        choices.append("1")
+    else:
+        print "Who? lines_(name here)"
+        nametoopen = "lines_"+raw_input()
+        choices.append("2")
+    print "Great. Do you want to enable debugging mode, which will display"
+    print "way way way too much info? Yes (1), No (2)"
+    print "(and save to a file)"
+    choice = raw_input()
+    if choice == "1":
+        choices.append("1")
+    else:
+        choices.append("2")
+    return choices
+#####END BEGINNING, TOP-LEVEL STUFF######
+#####BEGIN MISC SPECIFIC FUNCTIONS #######
+
+#####TOKENIZER#####################
+###BROKEN, KEEPS IN THE FONT COLOR STUFF AND DOES NOT USE SMILIES RIGHT
+def tokenize(line):
+	d = { ':)': '%HAPPY_SMILEY%', ':(': '%SAD_SMILEY%', ';)':'%WINK_SMILEY%', ':D': '%COLON_CAPD%', 'D:': '%CAPD_COLON%', ':3':'%COLON_3%', 'T.T':'%CAP_T_CRY%', '^.^':'%CARROTS_PD%', '^^':'%2CARROTS%', '^-^':'%CARROTS_MINUS%','^_^':'%CARROTS_UNDER%',"XD":'%CAP_XD%',"xD":'%LOW_XD%',"X3":'%CAPX3%',":U":'%COLON_U%', ";D":'%WINK_CAPD%', ":P":'%COLON_CAPP%', ";P":'%SEMI_CAPP%',"=P":"%EQUALSP%", ":-)":'%SMILEY_W_NOSE%', ":V":'%BIG_DUCK%', ":v":'%LITTLE_DUCK%' ,"=>":'%EQUALS_GREATER%', "=<":'%EQUALS_LESSER%', "O.O":'%BOPDBO%', "O.o":'%BOPDLO%', "o.O":'%LOPDBO%',"0.0":'%ZEROPDZERO%',"O.0":'%BOPDZERO%',"o.0":'%LOPDZERO%',"0.O":'%ZEROPDBO%',"0.o":'%ZERPPDLO%',"O_O":"%BOUNBO%","O_o":"%BOUNLO%","o_O":"%LOUNBO%","0_0":"%ZEROUNZERO%","O_0":"%BOUNZERO%","o_0":"%LOUNZERO%","0_O":"%ZEROUNBO%","0_o":"%ZEROUNLO%","X.X":"%BXPDBX%","X.x":"%BXPDLX%","x.x":"%LXPDLX%","X_X":"%BXUNBX%","X_x":"%BXUNLX%","x_X":"%LXUNBX%","x[":"%LXLB%","x]":"%LXRB%","X]":"%BXRB%","X[":"%BXLB%","x3":"%LX3%",":O":"%COLON_CAPO%",":0":"%COLON_ZERO%",":o":"%COLON_LO%",">:D":"%GRCOLCAPD%",":/":"%COLRSLASH%",":\\":"%COLLSLASH%"}
+	for smiley, placeholder in d.iteritems():
+		line = line.replace(smiley, placeholder)
+	list1 = line.split()
+	tokens = []
+	for item in list1: #removing metadata like /em, /ooc and such. If I want it, check the tokenizer in earlier versions
+            while re.match ('<i>\(\(',item): #Skyrates specific
+                item = item[5:]
+            while re.match ('<(.+?)>',item):
+                m = re.match('<(.+?)>',item)
+                remove = len(m.group(1))
+                item = item[remove:]
+            while re.match ('/em',item): #I do wanna keep this kind though, 
+                tokens.append(item[0:3])
+                item = item[3:]
+            while re.match ('/me',item):
+                tokens.append(item[0:3])
+                item = item[3:]
+            while re.match ('/emote',item):
+                tokens.append(item[0:6])
+                item = item[6:]
+            temp = [] #used for the end of word instances, to put them back on in order
+            while re.search('\W$',item):
+                if re.search ('\)\)',item): #skyrates specific
+                    item = item[:-2]
+                else:
+                    # non-alphnumeric item at end of item
+		    if len(item) > 0:
+			    temp.append(item[-1])
+			    item = item[:-1]
+            while re.match('\W',item):
+                #non-alphnumeric item at beginning of item
+                tokens.append(item[0])
+                item = item[1:]
+	    if len(item) != 0:
+		    tokens.append(item)
+	    tokens.extend(temp[::-1])
+	for index,each in enumerate(tokens):
+		for smiley, placeholder in d.iteritems():
+			if each == placeholder: #there exists a bug in which a letter or something on either side, rather, both sides, results in the smiley not being replaced from the <WHATEVER> form. May need to include something like a re.search with a group to find exactly where it is. Seems very rare though.
+				each = each.replace(placeholder, smiley)
+				tokens[index] = each
+	return tokens
+###############END TOKENIZER####################################################
+
+###Semi-Stupid bigram-ifier.############################################################
+def bigrammer(line):
+	bigrams = {}
+        bigramsfinal = {}
+	for index,each in enumerate(line):
+		#Replaces pronouns in some cases with more general terms to avoid overlooking different gender-based characters.
+		if each.lower() in ["he","she","him","her","himself","herself","his","her","hers"]:
+			line[index] = "3PS"
+	x = 0
+	while x < (len(line)-1):
+		#if (line[x].isalnum() == True) and (line[x+1].isalnum() == True): #only returns word bigrams, for now I'll include all
+                if (line[x],line[x+1]) in bigrams:
+                    bigrams[line[x],line[x+1]] += 1
+                else:
+                    bigrams[line[x],line[x+1]] = 1
+		x +=1
+        for key,val in bigrams.iteritems():
+            if val != 1:
+                bigramsfinal[key] = val
+	bigramsfinal = sorted(bigramsfinal.iteritems(), key=itemgetter(1), reverse=True)
+	return bigramsfinal
+
+###Semi-Stupid trigramm-ifier.############################################################
+def trigrammer(line):
+        trigramsfinal = {}
+	trigrams = {}
+	for index,each in enumerate(line):
+		#Replaces pronouns in some cases with more general terms to avoid overlooking different gender-based characters.
+		if each.lower() in ["he","she","him","her","himself","herself","his","her","hers"]:
+			line[index] = "3PS"
+	x = 1
+	while x < (len(line)-1):
+            if (line[x-1],line[x],line[x+1]) in trigrams:
+                trigrams[line[x-1],line[x],line[x+1]] += 1
+                x += 1
+            else:
+                trigrams[line[x-1],line[x],line[x+1]] = 1
+		x +=1
+        for key,val in trigrams.iteritems():
+            if val != 1:
+                trigramsfinal[key] = val
+	trigramsfinal = sorted(trigramsfinal.iteritems(), key=itemgetter(1), reverse=True)
+	return trigramsfinal
+###############FUNCTION WORDS, RETURN A DICT OF OCCURENCES OF THESE WORDS################
+def functionwords(tokens):
+	funcwords = {}
+        #Separate these into prepositions, determiners, apostrophated and non-apostrophated
+	for each in tokens.iteritems():
+		if each[0].lower() in FWords:
+			k = each[0]
+			v = each[1]
+			funcwords[k] = v
+	return funcwords
+
+def commas(line):
+	linecommas = 0
+        for each in line:
+		if each == ",":
+			linecommas += 1
+	return linecommas
+
+def commas2(numcommas):
+	totalcommas = 0
+	for each in numcommas:
+		totalcommas += each
+	avgcommas = totalcommas/len(numcommas)
+	#if debug == 1:
+#		print "AVG COMMAS PER LINE", avgcommas
+	return avgcommas
+
+def avglength(avgtokens):
+	avglen = 0
+	for each in avgtokens:
+		avglen += each
+	avglen = avglen/len(avgtokens) #AVERAGE LENGTH OF A LINE
+#	if debug == 1:
+#		print "AVG LEN OF A LINE:", avglen
+	return avglen
+
+def toptokens(alltokens):
+	x = 0
+	top_tokens = []
+	while x < howmanytop:
+		top_tokens.append(alltokens[x]) #get the top hundred tokens and how many times they are shown
+		x += 1
+	return top_tokens
+
+def alltokenswcounts(lines):
+	alltokens = {}
+	for each in lines:
+		if each in alltokens:
+			alltokens[each] += 1
+		else:
+			alltokens[each] = 1
+	alltokens = sorted(alltokens.iteritems(), key=itemgetter(1), reverse=True)
+	top_tokens = toptokens(alltokens)
+	#if debug == 1:
+		#print alltokens
+		#print
+		#print top_tokens
+		#print
+	return alltokens,top_tokens
+
+def calcdistance(line):
+	pos1 = 0
+	pos2 = 0
+	distance = []
+	commadist = [] #positions of the commas
+	for index,token in enumerate(line):
+		if token == ",":
+			pos1 = index
+			for index,token in enumerate(line):
+				if index > pos1:
+					if token == ",":
+						pos2 = index
+						break
+					else:
+						continue
+			if pos2 != 0:
+				commadist.append(pos1)
+	x = 0
+	y = 1
+	while y < len(commadist):
+		distance.append(commadist[y]-commadist[x]-1)
+		y+=1
+		x+=1
+	#if debug == 1:
+	#	if commadist != []:
+	#		print "COMMA POSITIONS:",commadist
+	return distance
+
+def averagedistance(avgdist):	
+	finalavg = 0
+	x = 0
+	for each in avgdist:
+		if each:
+			for index, indiv in enumerate(each):
+				finalavg += indiv
+				x += 1
+
+        favgdist = finalavg/x
+#	if debug == 1:
+#		print "AVGDIST:", favgdist
+	return favgdist
+
+def semis(lines):
+	totalsemis = 0
+	for token in lines:
+		if token == ";":
+			totalsemis += 1
+	average_semicolons = 0
+	average_semicolons = totalsemis / (len(lines)/10000)
+        if average_semicolons == 0:
+            average_semicolons = 0.00000000001
+        return average_semicolons
+
+def linecap(line):
+    try:
+	if line[0][0].isalpha():	
+		if (line[0][0] == line[0][0].capitalize()):
+			cap = 1
+		else:
+			cap = 0
+	else:
+		cap = 0
+    except:
+        cap = 0
+    return cap
+
+def percentcaps(totalcaps):
+	captotal = 0
+	for each in totalcaps:
+		captotal += each
+	captotal = 100*(captotal/len(totalcaps))
+	return captotal
+	
+def iterate(f):
+	lines = []
+	avgtokens = []
+	bigrams = {}
+	trigrams = {}
+	numcommas = []
+	avgdist = []
+	totalcaps = []
+	lineslen = 0
+	for line in f:
+		line = line.rstrip()
+		line = tokenize(line) #tokenize
+		avgtokens.append(len(line)) #add to list to determine avg number tokens per line
+		lines += line
+		numcommas.append(commas(line))
+		avglen = avglength(avgtokens)
+		avgdist.append(calcdistance(line))
+		totalcaps.append(linecap(line))
+	try:
+            avgdistance = averagedistance(avgdist)
+        except:
+            return "NO"
+	percentcap = percentcaps(totalcaps)
+        if len(lines) < cutofftokens:
+            return "NO"
+	return lines,len(lines),avglen,numcommas,avgdistance,percentcap
+
+def debugger(lines,totallen,avglen,avgcommas,avgdist,bigrams,trigrams,alltokens,top_tokens,semicolons,percentcap,write):
+	db =open("debugoutput.txt",write)
+	writethis = str(lines)+"\n"+"\n"+str(totallen)+"\n"+"\n"+str(avglen)+"\n"+"\n"+str(avgcommas)+"\n"+"\n"+str(avgdist)+"\n"+"\n"+str(bigrams)+"\n"+"\n"+str(trigrams)+"\n"+"\n"+str(alltokens)+"\n"+"\n"+str(top_tokens)+"\n"+"\n"+str(semicolons)+"\n"+"\n"+str(percentcap)
+	db.write(writethis)
+
+def stage1(person):
+#	if debug == 1:
+#		print person
+	filetoopen = directory + person
+#	if debug == 1:
+#		print filetoopen
+	f = open(filetoopen)
+	iterated = iterate(f)
+        if iterated == "NO":
+            return [0]
+	lines = iterated[0]
+	totallen = iterated[1]
+        avglen = iterated[2]
+	avgcommas = commas2(iterated[3])
+	avgdist = iterated[4]
+	percentcap = iterated[5]
+	bigrams = bigrammer(lines)
+	trigrams = trigrammer(lines)
+	alltokens = alltokenswcounts(lines)[0]
+	top_tokens = alltokenswcounts(lines)[1]
+	semicolons = semis(lines)
+        bigramcomparisons = {}
+        trigramcomparisons = {}
+	return lines,totallen,avglen,avgcommas,avgdist,bigrams,trigrams,alltokens,top_tokens,semicolons,percentcap,bigramcomparisons, trigramcomparisons
+
+def stage2(dossier,lengthgood):
+    finals = {}
+    comparisons = {}
+    #lines,totallen,avglen,avgcommas,avgdist,bigrams,trigrams,alltokens,top_tokens,semicolons,percentcap
+    print "STAGE 2 PROCESSING GO"
+    print
+    #get a list of all the bigrams and trigrams so as to see which are more and less popular
+    allbigrams = {}
+    alltrigrams = {}
+    totaltokens = 0
+    for person in dossier:
+        for key, val in dossier[person][5]:
+            if key not in allbigrams:
+                allbigrams[key] = val
+            else:
+                allbigrams[key] += val
+        for key, val in dossier[person][6]:
+            if key not in alltrigrams:
+                alltrigrams[key] = val
+            else:
+                alltrigrams[key] += val
+
+    #Now that alltrigrams and allbigrams are done, I can compare each person's bi and trigrams to the average amount each person says them.
+    
+    for person in dossier:
+        for key,val in dossier[person][5]: #I think I need to make this in allbigrams and check the dossier[person][5] values instead to catch ALL bigrams, not just what they said. Or, do I just check "if key in other person" or something? Yeah let's try that
+            dossier[person][11][key] = val/allbigrams[key]
+        for key,val in dossier[person][6]:
+            dossier[person][12][key] = val/alltrigrams[key]
+    #Values of 1.0 mean noone else says it. Very low values mean lots of people say it. In another person/every other person comparison, look for instances
+    #bi and trigram comparisons
+    w = open(directoryhigher+"OUT.txt","w")
+    for control in dossier:
+        finals[control] = {}
+        for experi in dossier:
+            try:
+                bigramfinalcomp = 0
+                trigramfinalcomp = 0
+                trigramssimilar = 0
+                bigramssimilar = 0
+                for each in dossier[experi][11]:
+                    if each in dossier[control][11]:
+                        bigramssimilar +=1
+                        bigramfinalcomp += fabs(dossier[experi][11][each] - dossier[control][11][each]) #or for higher values do 1- the fabs part
+                if bigramssimilar == 0:
+                    bigramssimilar = 1
+                bigramfinalcomp =(bigramfinalcomp*100) / bigramssimilar
+                for each in dossier[experi][12]:
+                    if each in dossier[control][12]:
+                        trigramssimilar +=1
+                        trigramfinalcomp += fabs(dossier[experi][12][each] - dossier[control][12][each]) #or for higher values do 1- the fabs part
+                if trigramssimilar == 0:
+                    trigramssimilar = 1
+                trigramfinalcomp =(trigramfinalcomp*100) / trigramssimilar        
+                avgcommaadjusted = fabs(1-((dossier[control][3]/dossier[control][2]) / (dossier[experi][3]/dossier[experi][2]))) # average distance between commas, accounting for average length of line. Should I do that? Or just use the straight-up comparison?
+                avgcommanorm = fabs(1-(dossier[control][3] / dossier[experi][3]))/4 #this may or may not be better
+            
+                avgdistadjusted = fabs(1-((dossier[control][4]/dossier[control][2]) / (dossier[experi][4]/dossier[experi][2]))) # average distance between commas, accounting for average length of line. Should I do that? Or just use the straight-up comparison?
+                avgdistnorm = fabs(1-(dossier[control][4] / dossier[experi][4]))/3 #this may or may not be better
+
+                semicomp = fabs(1-(dossier[control][9] / dossier[experi][9]))/6
+                capscomp = fabs(1-(dossier[control][10]/dossier[experi][10]))
+            
+                totaladjusted = avgcommaadjusted +avgdistadjusted +semicomp +capscomp+bigramfinalcomp+trigramfinalcomp
+                totalnorm = avgcommanorm + avgdistnorm + semicomp + capscomp+bigramfinalcomp+trigramfinalcomp
+                #for now, use Norm
+                #print control, "VS", experi+":", totaladjusted, "w/adjusted values"
+                if totalnorm < 10:
+                    finals[control][experi] = totalnorm
+            except:
+                pass
+    #sort the results from finals, and write to file
+    print "SORTING AND WRITING"
+    for key,value in finals.iteritems():
+            value = sorted(value.iteritems(), key=itemgetter(1), reverse=False)
+            for each in value:
+                for index,each2 in enumerate(each):
+                    if index == 0:
+                        if key != each2:
+            #                print str(key[6:])+" VS "+str(each2[6:])+":",
+                            writeme = str(key[6:])+" VS "+str(each2[6:])+": "
+                            w.write(writeme)
+                        else:
+            #                print str(key[6:])
+                            writeme = str(key[6:])+"\n"
+                            w.write(writeme)                            
+                    else:
+                        if each2 != 0.0:
+            #                print str(each2)
+                            writeme = str(each2)+"\n"
+                            w.write(writeme)
+            w.write("\n")
+            #print
+
+           # w.write("\n")
+        
+#    writeme = str(control[6:])+" VS "+str(experi[6:])+": "+ str(totalnorm)+"\n"
+#    w.write(writeme)
+
+    
+def main():
+    global debug
+    choices = intro()
+    if choices[0] == "1":
+        iterateover = 1
+    else:
+        iterateover = 2
+    if choices[1] == "1":
+        debug = 1
+    else:
+        debug = 0
+    dossier = {}
+    lengthgood = 0
+    numofpeople = 0
+    everytbigram = {}
+    everyttoken = {}
+    everybigram = {}
+    everytoken = {}
+    subdirectories = os.listdir(directory)
+    if iterateover == 0:
+	nametoopen = "lines_Gerhardt Fahrenheit"
+        howlong = stage1(nametoopen)
+            
+	if debug == 1:
+		debugger(howlong[0],howlong[1],howlong[2],howlong[3],howlong[4],howlong[5],howlong[6],howlong[7],howlong[8],howlong[9],howlong[10],"w")
+    else:
+        for person in subdirectories:
+            if person != ".DS_Store":
+                howlong = stage1(person)
+                if howlong[0] > cutofftokens:
+                    sys.stdout.flush(); sys.stdout.write("|")
+                    dossier[person] = howlong
+                    numofpeople +=1
+                    lengthgood += howlong[1]
+#                    w = open(directoryhigher+"Output Files/"+person[6:]+"OUT.txt","w")
+#                    writeme = str(howlong[0])+"\n\n"+str(howlong[1])+"\n\n"+str(howlong[2])+"\n\n"+str(howlong[3])+"\n\n"+str(howlong[4])+"\n\n"+str(howlong[5])+"\n\n"+str(howlong[6])+"\n\n"+str(howlong[7])+"\n\n"+str(howlong[8])+"\n\n"+str(howlong[9])+"\n\n"+str(howlong[10])
+#                    w.write(writeme)
+        print #so there's a line after all the |s
+        if debug == 1:
+            print numofpeople, "number of files being used right now"
+        
+        stage2(dossier,lengthgood)
+
+
+        
+if __name__ == '__main__':
+  main()
